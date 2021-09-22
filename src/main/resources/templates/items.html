@@ -1,2 +1,17 @@
 {{> /inc/header}}
+<br><hr>
+<form method="post" action="">
+	<input type="text" name="item" placeholder="Votre item">
+	<input type="submit" name="button" value="Valider">
+</form>
+<hr>
+
+<h1>Elements</h1>
+
+<ul>
+{{#items}}
+	<li>{{nom}}</li>
+{{/items}}
+</ul>
+
 {{> /inc/footer}}

@@ -5,11 +5,6 @@ public class Element {
 	private String nom;
 	private int evaluation;
 	
-	public Element(String nom, int evaluation) {
-		
-		this.nom = nom;
-		this.evaluation = evaluation;
-	}
 
 	public String getNom() {
 		return nom;
@@ -25,5 +20,14 @@ public class Element {
 
 	public void setEvaluation(int evaluation) {
 		this.evaluation = evaluation;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if(!(obj instanceof Element)) {
+			return false;
+		}
+		return ((Element)obj).getNom().equals(this.nom);
 	}
 }

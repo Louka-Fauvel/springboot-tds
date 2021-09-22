@@ -21,17 +21,26 @@ public class ItemsController {
 		return new ArrayList<>();
 	}
 	
-	@GetMapping("/items")
+	@GetMapping("/")
 	public String itemsAction() {
 		return "items";
 	}
 	
 	@GetMapping("/testAdd")
 	public RedirectView add(@SessionAttribute List<Element> items) {
+		
 		Element elm = new Element();
 		elm.setNom("bop");
-		getItems().add(elm);
 		
-		return new RedirectView("/td0/items");
+		if(!items.contains(elm)) {
+			items.add(elm);
+		}
+		
+		return new RedirectView("/");
+	}
+	
+	@GetMapping("/formAdd")
+	public String formAction(String nom) {
+		return "items";
 	}
 }
