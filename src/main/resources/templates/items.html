@@ -1,17 +1,28 @@
 {{> /inc/header}}
 <br><hr>
-<form method="post" action="">
-	<input type="text" name="item" placeholder="Votre item">
-	<input type="submit" name="button" value="Valider">
-</form>
-<hr>
-
 <h1>Elements</h1>
 
 <ul>
-{{#items}}
-	<li>{{nom}}</li>
+{{#items}} 
+	<li>{{nom}}<div class="ui star rating" data-rating="{{evaluation}}"></div>
+		<a href="items/inc/{{nom}}"><i class="ui angle up green icon"></i></a>
+		<a href="items/dec/{{nom}}"><i class="ui angle down red icon"></i></a>
+	</li>
 {{/items}}
 </ul>
+<hr>
 
+{{#msg}}
+	<div class="ui icon {{type}} message">
+		<i class="{{icon}} icon"></i>
+		<div class="content">
+			<div class="header">
+				<p>Ajout d'élément</p>
+			</div>
+			<p>{{{content}}}</p>
+		</div>
+	</div>
+{{/msg}}
+
+<p><a class="ui inverted violet button" href="/items/new">Fomulaire</a></p>
 {{> /inc/footer}}

@@ -30,4 +30,20 @@ public class Element {
 		}
 		return ((Element)obj).getNom().equals(this.nom);
 	}
+
+	public Element() {
+		
+	}
+	
+	public Element(String nom) {
+		this.nom = nom;
+	}
+	
+	public void inc() {
+		this.evaluation++;
+	}
+	
+	public void dec() {
+		this.evaluation--;
+	}
 }
