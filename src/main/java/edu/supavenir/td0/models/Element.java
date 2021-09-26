@@ -40,10 +40,27 @@ public class Element {
 	}
 	
 	public void inc() {
+		
 		this.evaluation++;
+		
+		if(this.evaluation >= 4) {
+			this.evaluation = 4;
+			
+		}
 	}
 	
 	public void dec() {
+		
 		this.evaluation--;
+		
+		if(this.evaluation <= 0) {
+			this.evaluation = 0;
+			
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Element [nom=" + nom + ", evaluation=" + evaluation + "]";
 	}
 }

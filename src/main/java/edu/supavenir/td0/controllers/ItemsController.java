@@ -81,4 +81,21 @@ public class ItemsController {
 		getElementByName(nom, items).dec();
 		return new RedirectView("/");
 	}
+	
+	@GetMapping("items/delete/{nom}")
+	public RedirectView deleteAction(@PathVariable String nom, @SessionAttribute List<Element> items) {
+		
+		System.out.println(nom);
+		
+		for (Element el : items) {
+			if (nom.equals(el.getNom())) {
+				
+				items.remove(el);
+				return new RedirectView("/");
+				
+			}
+		}
+		
+		return new RedirectView("/");
+	}
 }
