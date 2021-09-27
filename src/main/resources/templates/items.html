@@ -1,30 +1,45 @@
 {{> /inc/header}}
-<br><hr>
-<h1>Elements</h1>
+<br>
 
-<ul>
-{{#items}} 
-	<li>{{nom}}<div class="ui star rating" data-rating="{{evaluation}}"></div>
-		<a href="items/inc/{{nom}}"><i class="ui angle up green icon"></i></a>
-		<a href="items/dec/{{nom}}"><i class="ui angle down red icon"></i></a>
-		<a href="items/delete/{{nom}}" class="ui inverted red button">Effacer</a>
-	</li>
-	<br>
-{{/items}}
-</ul>
-<hr>
+<div class="ui top attached tabular menu _categories">
+	{{#categories}}
+  		<a class="item" data-tab="{{nom}}">{{nom}}</a>
+  
+	{{/categories}}
+</div>
+	{{#categories}} <!-- #each categories as | category | -->
+<div class="ui bottom attached tab segment" data-tab="{{nom}}">
+	<hr>
+	<h1>Elements</h1>
+	
+	<p><a class="ui inverted violet button" href="/items/new/{{nom}}">Fomulaire</a></p>
+	
+	<ul>
+	{{#itemsCategorie}}
+		<li>{{nom}}<div class="ui star rating" data-icon="star" data-rating="{{evaluation}}"></div>
+			<a href="items/inc/{{.}}/{{nom}}"><i class="ui angle up green icon"></i></a>
+			<a href="items/dec/{{.}}/{{nom}}"><i class="ui angle down red icon"></i></a>
+			<a href="items/delete/{{.}}/{{nom}}" class="ui inverted red button">Effacer</a>
+		</li>
+		<br>
+	{{/itemsCategorie}}
+	</ul>
+	<hr>
+</div>
+{{/categories}}
+
+
 
 {{#msg}}
 	<div class="ui icon {{type}} message">
 		<i class="{{icon}} icon"></i>
 		<div class="content">
 			<div class="header">
-				<p>Ajout d'élément</p>
+				<p>Message</p>
 			</div>
 			<p>{{{content}}}</p>
 		</div>
 	</div>
 {{/msg}}
 
-<p><a class="ui inverted violet button" href="/items/new">Fomulaire</a></p>
 {{> /inc/footer}}
