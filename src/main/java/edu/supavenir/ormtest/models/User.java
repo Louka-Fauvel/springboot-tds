@@ -21,6 +21,8 @@ public class User {
 
 	@ManyToMany(mappedBy = "users")
 	private List<Groupe> groups;
+	
+	private String firstname;
 
 	public User() {
 		groups = new ArrayList<Groupe>();
@@ -48,5 +50,13 @@ public class User {
 
 	public void setGroups(List<Groupe> groups) {
 		this.groups = groups;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 }
