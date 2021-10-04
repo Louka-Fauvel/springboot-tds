@@ -23,6 +23,8 @@ public class User {
 	private List<Groupe> groups;
 	
 	private String firstname;
+	
+	private String email;
 
 	public User() {
 		groups = new ArrayList<Groupe>();
@@ -58,5 +60,13 @@ public class User {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

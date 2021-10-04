@@ -1,0 +1,46 @@
+{{> /main/header}}
+
+<v-app>
+	<v-btn deep-purple lighten-2 v-on:click="loadUsers()">Recharger les Users</v-btn>
+	<ul>
+		<li v-for="user in users">
+			<% user.firstname %>
+			<% user.email %>
+			<v-badge v-if="user.organization" color="green" content="user.organization.name"></v-badge>
+		</li>
+	</ul>
+</v-app>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/2.5.9/vuetify.min.js"></script>
+<script>
+
+Vue.prototype.$http = axios;
+
+var app = new Vue({
+	
+	  el: 'v-app',
+	  vuetify: new Vuetify(),
+	  
+	  data: {
+		  users:[]
+	  },
+	  
+	  delimiters: ['<%' ,'%>'],
+	  
+	  mounted() {
+		  
+	  },
+	  
+	  methods:{
+		  
+		  loadUsers() {
+			  this.$http.get('/rest/users').then((response)=> {
+				  this.users = response.data;
+			  });
+		  }
+	  }
+	})
+</script>
+{{> /main/footer}}

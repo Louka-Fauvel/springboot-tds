@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Organization {
 
@@ -24,6 +26,7 @@ public class Organization {
 	@Column(nullable = true)
 	private String aliases;
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Groupe> groups;
 
 	public Organization() {
