@@ -1,14 +1,43 @@
 {{> /main/header}}
 
 <v-app>
-	<v-btn deep-purple lighten-2 v-on:click="loadUsers()">Recharger les Users</v-btn>
+	<v-btn fab small color="pink darken-3" v-on:click="form=!form"> <v-icon x-small dark>mdi-plus</v-icon> </v-btn>
+	<v-form v-show="form" v-model="valid">
+    <v-container>
+      <v-row ustify="center">
+      
+        <v-col cols="12" md="4">
+          <v-text-field v-model="newUser.firstname" :rules="nameRules" :counter="10" label="First name" required></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-text-field v-model="newUser.email" :rules="emailRules" label="Email" required></v-text-field>
+        </v-col>
+        
+      </v-row>
+      <v-row>
+      	<v-select return-object item-value="" item-text="name" v-model="newUser.organization" :items="organizations"></v-select>
+      </v-row>
+      
+      <v-btn :disabled="!valid" color="success" class="mr-4" @click="addUser">Validate</v-btn>
+      <v-btn color="error" class="mr-4" @click="resetUserForm">Reset Form</v-btn>
+    </v-container>
+  </v-form>
+  
+	<v-btn color="deep-purple lighten-2" v-on:click="loadUsers()">Recharger les Users</v-btn>
 	<ul>
 		<li v-for="user in users">
 			<% user.firstname %>
 			<% user.email %>
-			<v-badge v-if="user.organization" color="green" content="user.organization.name"></v-badge>
+			
+			<v-btn fab small v-on:click="edit(user)"> <v-icon x-small dark>mdi-minus</v-icon> </v-btn>
+			<v-btn fab small v-on:click="remove(user)"> <v-icon x-small dark>mdi-minus</v-icon> </v-btn>
+			<v-badge v-if="user.organization" color="green" v-bind:content="user.organization.name"></v-badge>
 		</li>
 	</ul>
+	
+  <v-alert v-if="message" type="success"><% message %></v-alert>
+  
 </v-app>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -24,20 +53,97 @@ var app = new Vue({
 	  vuetify: new Vuetify(),
 	  
 	  data: {
-		  users:[]
+		  form:false,
+		  message: null,
+		  users:[],
+		  organizations:[],
+		  newUser:{firstname:"", email:"", organization:""},
+		  valid:false,
+		  nameRules: [
+			  
+			  v => !!v || 'Name is required',
+			  v => v.length <= 10 || 'Name must be less than 10 characters',
+			  
+		  ],
+		  emailRules: [
+			  
+			  v => !!v || 'Email is required',
+			  v => /.+@.+/.test(v) || 'Email must be valid',
+			  
+		  ],
 	  },
 	  
 	  delimiters: ['<%' ,'%>'],
 	  
 	  mounted() {
-		  
+		  this.loadUsers();
+		  this.loadOrgas();
 	  },
 	  
 	  methods:{
 		  
+		  resetUserForm() {
+			  this.newUser = {firstname:"", email:""}
+		  },
+		  
+		  edit(user) {
+			  
+			  this.newUser = Object.assign({}, user);
+			  this.from.visible = true;
+			  this.from.mode = 1;
+		  },
+		  
+		  addOrUpdateUser() {
+			  if(this.from.mode == 0) {
+				  this.$http.post('/rest/users', this.newUser).then((response)=> {
+					  this.users.push(response.data);
+				  })
+			  } else{
+				  this.$http.post('/rest/users/'+ this.newUser.id, this.newUser).then((response)=> {
+					  let index = this.users.findIndex((item)=> item.od == this.newUser.id);
+					  if(index!= -1) {
+						  Vue.set(this.users, index, this.newUser);
+					  }
+				  });
+			  }
+			  this.from.visible = false;
+		  },
+		  
+		  addUser(){
+			  
+			  this.$http.post('/rest/users', this.newUser).then((response)=> {
+				  this.users.push(response.data);
+				  this.form = false;
+			  });
+		  },
+		  
 		  loadUsers() {
+			  
 			  this.$http.get('/rest/users').then((response)=> {
 				  this.users = response.data;
+			  });
+			  
+		  },
+		  
+		  loadOrgas() {
+			  
+			  this.$http.get('/rest/orgas').then((response)=> {
+				  this.organizations = response.data;
+			  });
+			  
+		  },
+		  
+		  remove(user) {
+			  
+			  this.$http.delete('/rest/users/' + user.id).then((responses)=> {
+				  
+				  if (response.data) {
+					  
+					  let index = this.users.indexOf(user);
+					  this.users.splice(index, 1);
+					  this.message = "Utilisateur " + user.firstname + " supprimé.";
+					  
+				  }
 			  });
 		  }
 	  }

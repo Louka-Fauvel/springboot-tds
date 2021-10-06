@@ -1,0 +1,22 @@
+{{> /main/header}}
+
+<v-app>
+<input v-model="message">
+<% message %>
+
+<h1>Organizations</h1>
+
+<ul>
+	<li v-for="orga in orgas">
+		<% orga.name %> <% orga.domain %>
+		<v-btn fab x-small v-on:click="remove(orga)"> <v-icon x-small dark>mdi-minus</v-icon> </v-btn>
+	</li>
+</ul>
+</v-app>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/2.5.9/vuetify.min.js"></script>
+
+{{{vue}}}
+{{> /main/footer}}

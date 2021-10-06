@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.supavenir.ormtest.models.User;
-import edu.supavenir.ormtest.repositories.UserRepository;
+import edu.supavenir.ormtest.models.Organization;
+import edu.supavenir.ormtest.repositories.OrgaRepository;
 
 @RestController
-@RequestMapping("/rest/users")
-public class RestUserController extends AbstractRestController<User> {
+@RequestMapping("/rest/orgas")
+public class RestOrgaController extends AbstractRestController<Organization> {
 	
 }
