@@ -1,0 +1,9 @@
+<div>
+	<v-btn primary @click='message="Hello"'>
+		Afficher Message
+	</v-btn>
+	
+	<v-alert :type="type">
+		{{message}}
+	</v-alert>
+</div>

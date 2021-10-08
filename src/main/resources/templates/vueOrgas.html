@@ -1,15 +1,21 @@
 {{> /main/header}}
 
 <v-app>
+<button-msg type="info"></button-msg>
+
 <input v-model="message">
 <% message %>
+
+<list-item :list="orgas" v-slot="{ item }">
+	<% item.id %> - <% item.name %>
+</list-item>
 
 <h1>Organizations</h1>
 
 <ul>
 	<li v-for="orga in orgas">
 		<% orga.name %> <% orga.domain %>
-		<v-btn fab x-small v-on:click="remove(orga)"> <v-icon x-small dark>mdi-minus</v-icon> </v-btn>
+		<v-btn fab x-small v-on:click="remove(orga)"> <v-icon dark>mdi-trash-can</v-icon> </v-btn>
 	</li>
 </ul>
 </v-app>
@@ -17,6 +23,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/2.5.9/vuetify.min.js"></script>
+<script src="/vueJS/button-msg.js"></script>
+<script src="/vueJS/list-item.js"></script>
+<!-- <script src="/vueJS/components.js"></script> -->
 
 {{{vue}}}
 {{> /main/footer}}
